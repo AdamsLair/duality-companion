@@ -12,7 +12,7 @@ namespace Duality.Plugins.Companion.Drawing
 	/// <summary>
 	/// Utility class containing the translation of .net's default Colors to ColorRgba objects
 	/// </summary>
-	public static class CommonColors
+	public static class Colors
 	{
 		public static readonly ColorRgba AliceBlue = new ColorRgba(240, 248, 255, 255);
 		public static readonly ColorRgba AntiqueWhite = new ColorRgba(250, 235, 215, 255);
