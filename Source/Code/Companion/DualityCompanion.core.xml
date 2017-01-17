@@ -9,7 +9,7 @@
             Defines a Duality core plugin.
             </summary>
         </member>
-        <member name="T:Duality.Plugins.Companion.Drawing.CommonColors">
+        <member name="T:Duality.Plugins.Companion.Drawing.Colors">
             <summary>
             Utility class containing the translation of .net's default Colors to ColorRgba objects
             </summary>
