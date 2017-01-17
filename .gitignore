@@ -1,0 +1,5 @@
+packages
+Companion/bin/
+Companion/obj/
+*.suo
+*.nupkg

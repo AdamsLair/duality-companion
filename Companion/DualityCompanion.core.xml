@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DualityCompanion.core</name>
+    </assembly>
+    <members>
+        <member name="T:Duality.Plugins.Companion.CompanionPlugin">
+            <summary>
+            Defines a Duality core plugin.
+            </summary>
+        </member>
+        <member name="T:Duality.Plugins.Companion.Drawing.CommonColors">
+            <summary>
+            Utility class containing the translation of .net's default Colors to ColorRgba objects
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Timer.AddTimer(System.Object,System.Single,Duality.Plugins.Companion.Timer.TimerElapsedEventDelegate,System.Boolean,System.UInt32)">
+            <summary>
+            Add a Timer to the managed list
+            </summary>
+            <param name="key">The key of the Timer</param>
+            <param name="interval">The interval in milliseconds after which the Timer will fire</param>
+            <param name="handler">The handler function that is called after the Timer fires</param>
+            <param name="realTime">If true, the Timer will count time based on real time clock, instead of in-game one. Defaults to false</param>
+            <param name="repeats">The maximum amount of times the Timer will fire before stopping. Defaults to 1</param>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Timer.RemoveTimer(System.Object)">
+            <summary>
+            Remove a Timer from the managed list, if present
+            </summary>
+            <param name="key">The key of the Timer</param>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Timer.StartTimer(System.Object)">
+            <summary>
+            Sets a Timer as Active
+            </summary>
+            <param name="key">The key of the Timer</param>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Timer.StopTimer(System.Object)">
+            <summary>
+            Sets a Timer as Inactive. The elapsed time will not be lost.
+            </summary>
+            <param name="key">The key of the Timer</param>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Timer.ClearTimer(System.Object)">
+            <summary>
+            Sets a Timer as Inactive. The elapsed time will be lost.
+            </summary>
+            <param name="key">The key of the Timer</param>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Timer.IsExpired(System.Object)">
+            <summary>
+            Indicates if a Timer fired in the current frame.
+            </summary>
+            <param name="key">The key of the Timer</param>
+            <returns>True if the Timer fired in this frame. False otherwise</returns>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Timer.GetCompletion(System.Object)">
+            <summary>
+            Returns the amount of time passed relative to the whole interval of a Timer.
+            </summary>
+            <param name="key">The key of the Timer</param>
+            <returns>A value between 0 (inclusive) and 1 (exclusive)</returns>
+        </member>
+    </members>
+</doc>
