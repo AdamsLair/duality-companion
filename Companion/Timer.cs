@@ -10,7 +10,7 @@ namespace Duality.Plugins.Companion
 	{
 		public delegate void TimerElapsedEventDelegate();
 
-		internal struct TimerInstance
+		internal class TimerInstance
 		{
 			internal float Interval;
 			internal float Elapsed;
@@ -26,7 +26,7 @@ namespace Duality.Plugins.Companion
 
 		private static Dictionary<object, TimerInstance> _instances = new Dictionary<object, TimerInstance>();
 
-		internal static void OnUpdate()
+		internal static void Update()
 		{
 			float lastDeltaRealtime = Time.LastDelta;
 			float lastDeltaGameTime = Time.MsPFMult * Time.TimeMult;
@@ -48,6 +48,11 @@ namespace Duality.Plugins.Companion
 					if (--timer.RepeatsLeft == 0) timer.IsActive = false;
 				}
 			}
+		}
+
+		internal static void Cleanup()
+		{
+			_instances.Clear();
 		}
 
 		/// <summary>

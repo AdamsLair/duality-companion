@@ -18,7 +18,17 @@ namespace Duality.Plugins.Companion
 		{
 			base.OnBeforeUpdate();
 
-			Timer.OnUpdate();
+			if (DualityApp.ExecContext == DualityApp.ExecutionContext.Game)
+			{
+				Timer.Update();
+			}
+		}
+
+		protected override void OnExecContextChanged(DualityApp.ExecutionContext previousContext)
+		{
+			base.OnExecContextChanged(previousContext);
+
+			Timer.Cleanup();
 		}
 	}
 }
