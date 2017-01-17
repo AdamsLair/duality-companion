@@ -1,5 +1,4 @@
 ﻿using Duality.Drawing;
-using System;
 
 namespace Duality.Plugins.Companion.Components
 {
