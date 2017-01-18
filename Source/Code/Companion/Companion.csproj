@@ -52,6 +52,8 @@
     <Compile Include="CompanionPlugin.cs" />
     <Compile Include="Components\CameraExtensions.cs" />
     <Compile Include="Components\OverlayRenderer.cs" />
+    <Compile Include="Components\ColorFader.cs" />
+    <Compile Include="Components\SceneSwitcher.cs" />
     <Compile Include="Drawing\Colors.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,9 +73,7 @@
       <HintPath>..\..\..\NVorbis.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Components\Renderers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(SolutionDir)../../Plugins"
