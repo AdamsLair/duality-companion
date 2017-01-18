@@ -344,7 +344,8 @@ namespace Duality.Plugins.Companion
         /// </summary>
         private void UpdateValue()
         {
-            value = lerpFunc(start, end, scaleFunc(currentTime / duration));
+            if (scaleFunc != null)
+                value = lerpFunc(start, end, scaleFunc(currentTime / duration));
         }
     }
 
