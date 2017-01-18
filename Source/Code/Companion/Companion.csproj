@@ -55,6 +55,7 @@
     <Compile Include="Drawing\Colors.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TinyTween.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Duality">

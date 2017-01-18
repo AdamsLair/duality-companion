@@ -62,5 +62,348 @@
             <param name="key">The key of the Timer</param>
             <returns>A value between 0 (inclusive) and 1 (exclusive)</returns>
         </member>
+        <!-- Ungültiger XML-Kommentar wurde für den Member "T:Duality.Plugins.Companion.ScaleFunc" ignoriert -->
+        <member name="T:Duality.Plugins.Companion.LerpFunc`1">
+             <summary>
+             Standard linear interpolation function: "start + (end - start) * progress"
+             </summary>
+             <remarks>
+             In a language like C++ we wouldn't need this delegate at all. Templates in C++ would allow us
+             to simply write "start + (end - start) * progress" in the tween class and the compiler would
+             take care of enforcing that the type supported those operators. Unfortunately C#'s generics
+             are not so powerful so instead we must have the user provide the interpolation function.
+            
+             Thankfully frameworks like XNA and Unity provide lerp functions on their primitive math types
+             which means that for most users there is nothing specific to do here. Additionally this file
+             provides concrete implementations of tweens for vectors, colors, and more for XNA and Unity
+             users, lessening the burden even more.
+             </remarks>
+             <typeparam name="T">The type to interpolate.</typeparam>
+             <param name="start">The starting value.</param>
+             <param name="end">The ending value.</param>
+             <param name="progress">The interpolation progress.</param>
+             <returns>The interpolated value, generally using "start + (end - start) * progress"</returns>
+        </member>
+        <member name="T:Duality.Plugins.Companion.TweenState">
+            <summary>
+            State of an ITween object
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.TweenState.Running">
+            <summary>
+            The tween is running.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.TweenState.Paused">
+            <summary>
+            The tween is paused.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.TweenState.Stopped">
+            <summary>
+            The tween is stopped.
+            </summary>
+        </member>
+        <member name="T:Duality.Plugins.Companion.StopBehavior">
+            <summary>
+            The behavior to use when manually stopping a tween.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.StopBehavior.AsIs">
+            <summary>
+            Does not change the current value.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.StopBehavior.ForceComplete">
+            <summary>
+            Forces the tween progress to the end value.
+            </summary>
+        </member>
+        <member name="T:Duality.Plugins.Companion.ITween">
+            <summary>
+            Interface for a tween object.
+            </summary>
+        </member>
+        <member name="P:Duality.Plugins.Companion.ITween.State">
+            <summary>
+            Gets the current state of the tween.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.ITween.Pause">
+            <summary>
+            Pauses the tween.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.ITween.Resume">
+            <summary>
+            Resumes the paused tween.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.ITween.Stop(Duality.Plugins.Companion.StopBehavior)">
+            <summary>
+            Stops the tween.
+            </summary>
+            <param name="stopBehavior">The behavior to use to handle the stop.</param>
+        </member>
+        <member name="M:Duality.Plugins.Companion.ITween.Update(System.Single)">
+            <summary>
+            Updates the tween.
+            </summary>
+            <param name="elapsedTime">The elapsed time to add to the tween.</param>
+        </member>
+        <member name="T:Duality.Plugins.Companion.ITween`1">
+            <summary>
+            Interface for a tween object that handles a specific type.
+            </summary>
+            <typeparam name="T">The type to tween.</typeparam>
+        </member>
+        <member name="P:Duality.Plugins.Companion.ITween`1.CurrentValue">
+            <summary>
+            Gets the current value of the tween.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.ITween`1.Start(`0,`0,System.Single,Duality.Plugins.Companion.Easing)">
+            <summary>
+            Starts a tween.
+            </summary>
+            <param name="start">The start value.</param>
+            <param name="end">The end value.</param>
+            <param name="duration">The duration of the tween.</param>
+            <param name="scaleFunc">A function used to scale progress over time.</param>
+        </member>
+        <member name="T:Duality.Plugins.Companion.Tween`1">
+            <summary>
+            A concrete implementation of a tween object.
+            </summary>
+            <typeparam name="T">The type to tween.</typeparam>
+        </member>
+        <member name="P:Duality.Plugins.Companion.Tween`1.CurrentTime">
+            <summary>
+            Gets the current time of the tween.
+            </summary>
+        </member>
+        <member name="P:Duality.Plugins.Companion.Tween`1.Duration">
+            <summary>
+            Gets the duration of the tween.
+            </summary>
+        </member>
+        <member name="P:Duality.Plugins.Companion.Tween`1.State">
+            <summary>
+            Gets the current state of the tween.
+            </summary>
+        </member>
+        <member name="P:Duality.Plugins.Companion.Tween`1.StartValue">
+            <summary>
+            Gets the starting value of the tween.
+            </summary>
+        </member>
+        <member name="P:Duality.Plugins.Companion.Tween`1.EndValue">
+            <summary>
+            Gets the ending value of the tween.
+            </summary>
+        </member>
+        <member name="P:Duality.Plugins.Companion.Tween`1.CurrentValue">
+            <summary>
+            Gets the current value of the tween.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Tween`1.#ctor(Duality.Plugins.Companion.LerpFunc{`0})">
+            <summary>
+            Initializes a new Tween with a given lerp function.
+            </summary>
+            <remarks>
+            C# generics are good but not good enough. We need a delegate to know how to
+            interpolate between the start and end values for the given type.
+            </remarks>
+            <param name="lerpFunc">The interpolation function for the tween type.</param>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Tween`1.Start(`0,`0,System.Single,Duality.Plugins.Companion.Easing)">
+            <summary>
+            Starts a tween.
+            </summary>
+            <param name="start">The start value.</param>
+            <param name="end">The end value.</param>
+            <param name="duration">The duration of the tween.</param>
+            <param name="scaleFunc">A function used to scale progress over time.</param>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Tween`1.Pause">
+            <summary>
+            Pauses the tween.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Tween`1.Resume">
+            <summary>
+            Resumes the paused tween.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Tween`1.Stop(Duality.Plugins.Companion.StopBehavior)">
+            <summary>
+            Stops the tween.
+            </summary>
+            <param name="stopBehavior">The behavior to use to handle the stop.</param>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Tween`1.Update(System.Single)">
+            <summary>
+            Updates the tween.
+            </summary>
+            <param name="elapsedTime">The elapsed time to add to the tween.</param>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Tween`1.UpdateValue">
+            <summary>
+            Helper that uses the current time, duration, and delegates to update the current value.
+            </summary>
+        </member>
+        <member name="T:Duality.Plugins.Companion.FloatTween">
+            <summary>
+            Object used to tween float values.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.FloatTween.#ctor">
+            <summary>
+            Initializes a new FloatTween instance.
+            </summary>
+        </member>
+        <member name="T:Duality.Plugins.Companion.Vector2Tween">
+            <summary>
+            Object used to tween Vector2 values.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Vector2Tween.#ctor">
+            <summary>
+            Initializes a new Vector2Tween instance.
+            </summary>
+        </member>
+        <member name="T:Duality.Plugins.Companion.Vector3Tween">
+            <summary>
+            Object used to tween Vector3 values.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Vector3Tween.#ctor">
+            <summary>
+            Initializes a new Vector3Tween instance.
+            </summary>
+        </member>
+        <member name="T:Duality.Plugins.Companion.Vector4Tween">
+            <summary>
+            Object used to tween Vector4 values.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Vector4Tween.#ctor">
+            <summary>
+            Initializes a new Vector4Tween instance.
+            </summary>
+        </member>
+        <member name="T:Duality.Plugins.Companion.ColorTween">
+            <summary>
+            Object used to tween Color values.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.ColorTween.#ctor">
+            <summary>
+            Initializes a new ColorTween instance.
+            </summary>
+        </member>
+        <member name="T:Duality.Plugins.Companion.QuaternionTween">
+            <summary>
+            Object used to tween Quaternion values.
+            </summary>
+        </member>
+        <member name="M:Duality.Plugins.Companion.QuaternionTween.#ctor">
+            <summary>
+            Initializes a new QuaternionTween instance.
+            </summary>
+        </member>
+        <member name="T:Duality.Plugins.Companion.ScaleFuncs">
+             <summary>
+             Defines a set of premade scale functions for use with tweens.
+             </summary>
+             <remarks>
+             To avoid excess allocations of delegates, the public members of ScaleFuncs are already
+             delegates that reference private methods.
+            
+             Implementations based on http://theinstructionlimit.com/flash-style-tweeneasing-functions-in-c
+             which are based on http://www.robertpenner.com/easing/
+             </remarks>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.Linear">
+            <summary>
+            A linear progress scale function.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.QuadraticEaseIn">
+            <summary>
+            A quadratic (x^2) progress scale function that eases in.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.QuadraticEaseOut">
+            <summary>
+            A quadratic (x^2) progress scale function that eases out.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.QuadraticEaseInOut">
+            <summary>
+            A quadratic (x^2) progress scale function that eases in and out.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.CubicEaseIn">
+            <summary>
+            A cubic (x^3) progress scale function that eases in.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.CubicEaseOut">
+            <summary>
+            A cubic (x^3) progress scale function that eases out.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.CubicEaseInOut">
+            <summary>
+            A cubic (x^3) progress scale function that eases in and out.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.QuarticEaseIn">
+            <summary>
+            A quartic (x^4) progress scale function that eases in.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.QuarticEaseOut">
+            <summary>
+            A quartic (x^4) progress scale function that eases out.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.QuarticEaseInOut">
+            <summary>
+            A quartic (x^4) progress scale function that eases in and out.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.QuinticEaseIn">
+            <summary>
+            A quintic (x^5) progress scale function that eases in.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.QuinticEaseOut">
+            <summary>
+            A quintic (x^5) progress scale function that eases out.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.QuinticEaseInOut">
+            <summary>
+            A quintic (x^5) progress scale function that eases in and out.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.SineEaseIn">
+            <summary>
+            A sinusoidal progress scale function that eases in.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.SineEaseOut">
+            <summary>
+            A sinusoidal progress scale function that eases out.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.ScaleFuncs.SineEaseInOut">
+            <summary>
+            A sinusoidal progress scale function that eases in and out.
+            </summary>
+        </member>
     </members>
 </doc>
