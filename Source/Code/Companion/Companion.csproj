@@ -50,7 +50,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CompanionPlugin.cs" />
-    <Compile Include="Components\CameraExtensions.cs" />
+    <Compile Include="Components\CameraShaker.cs" />
     <Compile Include="Components\OverlayRenderer.cs" />
     <Compile Include="Components\ColorFader.cs" />
     <Compile Include="Components\SceneSwitcher.cs" />

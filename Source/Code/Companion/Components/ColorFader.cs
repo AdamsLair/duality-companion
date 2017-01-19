@@ -14,7 +14,12 @@ namespace Duality.Plugins.Companion.Components
             set { faded = value; }
         }
 
-        [DontSerialize]
+		public override float BoundRadius
+		{
+			get { return 0; }
+		}
+		
+		[DontSerialize]
         private EventHandler faded;
 
         [DontSerialize]
@@ -43,7 +48,7 @@ namespace Duality.Plugins.Companion.Components
 
             if (colorTween.State == TweenState.Stopped)
             {
-                faded?.Invoke(this, EventArgs.Empty);
+				if(faded != null) faded.Invoke(this, EventArgs.Empty);
                 colorTween.Stop(StopBehavior.ForceComplete);
             }
         }
@@ -59,5 +64,5 @@ namespace Duality.Plugins.Companion.Components
                 canvas.FillRect(0, 0, DualityApp.TargetResolution.X, DualityApp.TargetResolution.Y);
             }
         }
-    }
+	}
 }

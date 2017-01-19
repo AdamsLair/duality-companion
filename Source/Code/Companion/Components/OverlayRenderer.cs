@@ -4,7 +4,7 @@ namespace Duality.Plugins.Companion.Components
 {
 	public abstract class OverlayRenderer : Component, ICmpRenderer
 	{
-		public float BoundRadius { get; }
+		public abstract float BoundRadius { get; }
 
 		public bool IsVisible(IDrawDevice device)
 		{

@@ -1,5 +1,6 @@
 packages
 Plugins
+Backup
 **/obj/
 **/bin/
 *.suo

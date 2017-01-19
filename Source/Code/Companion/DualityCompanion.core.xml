@@ -9,6 +9,57 @@
             Defines a Duality core plugin.
             </summary>
         </member>
+        <member name="M:Duality.Plugins.Companion.Components.CameraShaker.Shake(Duality.Plugins.Companion.Components.CameraShaker.ShakeDirection,System.UInt32,System.Single,System.UInt32)">
+            <summary>
+            Adds a shake to the camera. If the previous shaking is not complete, the remaining strength
+            will combine with the new one.
+            </summary>
+            <param name="direction">The direction of the shake.</param>
+            <param name="strength">The strength of the shake, or how many pixels it will move at most in one direction (assuming the shake function stays in its default range of [-1, 1]). Defaults to 10.</param>
+            <param name="time">How long, in seconds, the shake should last. Defaults to .5.</param>
+            <param name="speed">The speed of the shake. The lower, the less the camera will shake. Defaults to 100.</param>
+        </member>
+        <member name="M:Duality.Plugins.Companion.Components.CameraShaker.Shake(Duality.Plugins.Companion.Components.CameraShaker.ShakeGenerator,System.UInt32,System.Single,System.UInt32)">
+            <summary>
+            Adds a shake to the camera. If the previous shaking is not complete, the remaining strength
+            will combine with the new one.
+            This requires a custom implementation of the generator function.
+            </summary>
+            <param name="generator">The function that generates displacement based on time.</param>
+            <param name="strength">The strength of the shake, or how many pixels it will move at most in one direction (assuming the shake function stays in its default range of [-1, 1]).</param>
+            <param name="time">How long, in seconds, the shake should last.</param>
+            <param name="speed">The speed of the shake. The lower, the less the camera will shake.</param>
+        </member>
+        <member name="T:Duality.Plugins.Companion.Components.CameraShaker.ShakeGenerator">
+            <summary>
+            Takes a time, defined as a float value, and returns a Vector2 which represents 
+            the camera displacement.
+            To avoid side effects with the other parameters, the resulting Vector's components
+            should be in the range [-1, 1].
+            </summary>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Duality.Plugins.Companion.Components.CameraShaker.ShakeDirection">
+            <summary>
+            The type of shaking
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.Components.CameraShaker.ShakeDirection.Horizontal">
+            <summary>
+            Left-Right - implemented as a cosine function.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.Components.CameraShaker.ShakeDirection.Vertical">
+            <summary>
+            Up-Down - implemented as a cosine function.
+            </summary>
+        </member>
+        <member name="F:Duality.Plugins.Companion.Components.CameraShaker.ShakeDirection.Circular">
+            <summary>
+            Spiral-like - implemented as a cosine function on the X and a sine on the Y.
+            </summary>
+        </member>
         <member name="T:Duality.Plugins.Companion.Drawing.Colors">
             <summary>
             Utility class containing the translation of .net's default Colors to ColorRgba objects
@@ -62,7 +113,7 @@
             <param name="key">The key of the Timer</param>
             <returns>A value between 0 (inclusive) and 1 (exclusive)</returns>
         </member>
-        <!-- Ungültiger XML-Kommentar wurde für den Member "T:Duality.Plugins.Companion.ScaleFunc" ignoriert -->
+        <!-- Commento XML in formato non corretto ignorato per il membro "T:Duality.Plugins.Companion.ScaleFunc" -->
         <member name="T:Duality.Plugins.Companion.LerpFunc`1">
              <summary>
              Standard linear interpolation function: "start + (end - start) * progress"
@@ -124,11 +175,6 @@
             Interface for a tween object.
             </summary>
         </member>
-        <member name="P:Duality.Plugins.Companion.ITween.State">
-            <summary>
-            Gets the current state of the tween.
-            </summary>
-        </member>
         <member name="M:Duality.Plugins.Companion.ITween.Pause">
             <summary>
             Pauses the tween.
@@ -151,16 +197,16 @@
             </summary>
             <param name="elapsedTime">The elapsed time to add to the tween.</param>
         </member>
+        <member name="P:Duality.Plugins.Companion.ITween.State">
+            <summary>
+            Gets the current state of the tween.
+            </summary>
+        </member>
         <member name="T:Duality.Plugins.Companion.ITween`1">
             <summary>
             Interface for a tween object that handles a specific type.
             </summary>
             <typeparam name="T">The type to tween.</typeparam>
-        </member>
-        <member name="P:Duality.Plugins.Companion.ITween`1.CurrentValue">
-            <summary>
-            Gets the current value of the tween.
-            </summary>
         </member>
         <member name="M:Duality.Plugins.Companion.ITween`1.Start(`0,`0,System.Single,Duality.Plugins.Companion.Easing)">
             <summary>
@@ -171,41 +217,16 @@
             <param name="duration">The duration of the tween.</param>
             <param name="scaleFunc">A function used to scale progress over time.</param>
         </member>
+        <member name="P:Duality.Plugins.Companion.ITween`1.CurrentValue">
+            <summary>
+            Gets the current value of the tween.
+            </summary>
+        </member>
         <member name="T:Duality.Plugins.Companion.Tween`1">
             <summary>
             A concrete implementation of a tween object.
             </summary>
             <typeparam name="T">The type to tween.</typeparam>
-        </member>
-        <member name="P:Duality.Plugins.Companion.Tween`1.CurrentTime">
-            <summary>
-            Gets the current time of the tween.
-            </summary>
-        </member>
-        <member name="P:Duality.Plugins.Companion.Tween`1.Duration">
-            <summary>
-            Gets the duration of the tween.
-            </summary>
-        </member>
-        <member name="P:Duality.Plugins.Companion.Tween`1.State">
-            <summary>
-            Gets the current state of the tween.
-            </summary>
-        </member>
-        <member name="P:Duality.Plugins.Companion.Tween`1.StartValue">
-            <summary>
-            Gets the starting value of the tween.
-            </summary>
-        </member>
-        <member name="P:Duality.Plugins.Companion.Tween`1.EndValue">
-            <summary>
-            Gets the ending value of the tween.
-            </summary>
-        </member>
-        <member name="P:Duality.Plugins.Companion.Tween`1.CurrentValue">
-            <summary>
-            Gets the current value of the tween.
-            </summary>
         </member>
         <member name="M:Duality.Plugins.Companion.Tween`1.#ctor(Duality.Plugins.Companion.LerpFunc{`0})">
             <summary>
@@ -251,6 +272,36 @@
         <member name="M:Duality.Plugins.Companion.Tween`1.UpdateValue">
             <summary>
             Helper that uses the current time, duration, and delegates to update the current value.
+            </summary>
+        </member>
+        <member name="P:Duality.Plugins.Companion.Tween`1.CurrentTime">
+            <summary>
+            Gets the current time of the tween.
+            </summary>
+        </member>
+        <member name="P:Duality.Plugins.Companion.Tween`1.Duration">
+            <summary>
+            Gets the duration of the tween.
+            </summary>
+        </member>
+        <member name="P:Duality.Plugins.Companion.Tween`1.State">
+            <summary>
+            Gets the current state of the tween.
+            </summary>
+        </member>
+        <member name="P:Duality.Plugins.Companion.Tween`1.StartValue">
+            <summary>
+            Gets the starting value of the tween.
+            </summary>
+        </member>
+        <member name="P:Duality.Plugins.Companion.Tween`1.EndValue">
+            <summary>
+            Gets the ending value of the tween.
+            </summary>
+        </member>
+        <member name="P:Duality.Plugins.Companion.Tween`1.CurrentValue">
+            <summary>
+            Gets the current value of the tween.
             </summary>
         </member>
         <member name="T:Duality.Plugins.Companion.FloatTween">
