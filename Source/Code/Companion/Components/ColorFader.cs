@@ -20,37 +20,36 @@ namespace Duality.Plugins.Companion.Components
 			get { return 0; }
 		}
 
-		[DontSerialize]
-		private EventHandler faded;
-
-		[DontSerialize]
-		private readonly ColorTween colorTween = new ColorTween();
+		[DontSerialize] private EventHandler        faded;
+		[DontSerialize] private readonly ColorTween colorTween = new ColorTween();
 
 		public void FadeIn(float duration, ColorRgba color, Easing easing)
 		{
-			if (colorTween.State != TweenState.Running)
+			if (this.colorTween.State != TweenState.Running)
 			{
-				colorTween.Start(color, new ColorRgba(0, 0, 0, 0f), duration, easing);
+				this.colorTween.Start(color, new ColorRgba(0, 0, 0, 0f), duration, easing);
 			}
 		}
 
 		public void FadeOut(float duration, ColorRgba color, Easing easing)
 		{
-			if (colorTween.State != TweenState.Running)
+			if (this.colorTween.State != TweenState.Running)
 			{
-				colorTween.Start(new ColorRgba(0, 0, 0, 0f), color, duration, easing);
+				this.colorTween.Start(new ColorRgba(0, 0, 0, 0f), color, duration, easing);
 			}
 		}
 
 		public void OnUpdate()
 		{
-			if (colorTween.State == TweenState.Running)
-				colorTween.Update(Time.LastDelta);
+			if (this.colorTween.State == TweenState.Running)
+			{
+				this.colorTween.Update(Time.LastDelta);
+			}
 
 			if (colorTween.State == TweenState.Stopped)
 			{
-				if (faded != null) faded.Invoke(this, EventArgs.Empty);
-				colorTween.Stop(StopBehavior.ForceComplete);
+				this.faded?.Invoke(this, EventArgs.Empty);
+				this.colorTween.Stop(StopBehavior.ForceComplete);
 			}
 		}
 
