@@ -57,7 +57,18 @@
     <Compile Include="Drawing\Colors.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TinyTween.cs" />
+    <Compile Include="Tweens\ColorTween.cs" />
+    <Compile Include="Tweens\Easing.cs" />
+    <Compile Include="Tweens\FloatTween.cs" />
+    <Compile Include="Tweens\ITween.cs" />
+    <Compile Include="Tweens\QuaternionTween.cs" />
+    <Compile Include="Tweens\ScaleFuncs.cs" />
+    <Compile Include="Tweens\StopBehavior.cs" />
+    <Compile Include="Tweens\Tween.cs" />
+    <Compile Include="Tweens\TweenState.cs" />
+    <Compile Include="Tweens\Vector2Tween.cs" />
+    <Compile Include="Tweens\Vector3Tween.cs" />
+    <Compile Include="Tweens\Vector4Tween.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Duality">
