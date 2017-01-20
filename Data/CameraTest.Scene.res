@@ -73,7 +73,7 @@
             <gameobj dataType="ObjectRef">3818958152</gameobj>
           </item>
           <item dataType="Struct" type="Duality.Plugins.Companion.Components.CameraMan" id="1295213101">
-            <_x003C_AlignWithTargetDirection_x003E_k__BackingField dataType="Bool">true</_x003C_AlignWithTargetDirection_x003E_k__BackingField>
+            <_x003C_AlignWithTargetDirection_x003E_k__BackingField dataType="Bool">false</_x003C_AlignWithTargetDirection_x003E_k__BackingField>
             <_x003C_Target_x003E_k__BackingField dataType="Struct" type="Duality.Components.Transform" id="906503665">
               <active dataType="Bool">true</active>
               <angle dataType="Float">0</angle>

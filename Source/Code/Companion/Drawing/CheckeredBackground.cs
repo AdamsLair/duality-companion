@@ -36,18 +36,18 @@ namespace Duality.Plugins.Companion.Drawing
 
 		public void Draw(Duality.Drawing.IDrawDevice device)
 		{
-			this.fullScreen = device.GetSpaceCoord(DualityApp.TargetResolution );
+			this.fullScreen = device.GetSpaceCoord(DualityApp.TargetResolution - device.RefCoord.Xy);
 
 			this.vertices[0].Pos = device.GetSpaceCoord(Vector2.Zero - device.RefCoord.Xy);
 			this.vertices[0].Pos.Z = device.FocusDist + this.Z;
 
-			this.vertices[2].Pos = device.GetSpaceCoord(Vector2.One * DualityApp.TargetResolution);
+			this.vertices[2].Pos = device.GetSpaceCoord(Vector2.One * DualityApp.TargetResolution - device.RefCoord.Xy);
 			this.vertices[2].Pos.Z = device.FocusDist + this.Z;
 
-			this.vertices[1].Pos = device.GetSpaceCoord(Vector2.UnitY * DualityApp.TargetResolution);
+			this.vertices[1].Pos = device.GetSpaceCoord(Vector2.UnitY * DualityApp.TargetResolution - device.RefCoord.Xy);
 			this.vertices[1].Pos.Z = device.FocusDist + this.Z;
 
-			this.vertices[3].Pos = device.GetSpaceCoord(Vector2.UnitX * DualityApp.TargetResolution);
+			this.vertices[3].Pos = device.GetSpaceCoord(Vector2.UnitX * DualityApp.TargetResolution - device.RefCoord.Xy);
 			this.vertices[3].Pos.Z = device.FocusDist + this.Z;
 			/*
 			float scale = 1;
