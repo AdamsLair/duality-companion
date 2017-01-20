@@ -8,6 +8,8 @@ Backup
 *.dll
 *.pdb
 *.exe
+*.txt
+*.dat
 *.config
 !Duality.dll
 !DualityEditor.exe

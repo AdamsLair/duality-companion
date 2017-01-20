@@ -48,7 +48,10 @@ namespace Duality.Plugins.Companion.Components
 
 			if (colorTween.State == TweenState.Stopped)
 			{
-				this.faded?.Invoke(this, EventArgs.Empty);
+				if (this.faded == null)
+				{
+					this.faded.Invoke(this, EventArgs.Empty);
+				}
 				this.colorTween.Stop(StopBehavior.ForceComplete);
 			}
 		}
