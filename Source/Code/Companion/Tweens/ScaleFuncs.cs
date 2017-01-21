@@ -163,13 +163,13 @@ namespace Duality.Plugins.Companion.Tweens
 
 		private static float EaseInPower(float progress, int power)
 		{
-			return (float)Math.Pow(progress, power);
+			return (float)MathF.Pow(progress, power);
 		}
 
 		private static float EaseOutPower(float progress, int power)
 		{
 			int sign = power % 2 == 0 ? -1 : 1;
-			return (float)(sign * (Math.Pow(progress - 1, power) + sign));
+			return (float)(sign * (MathF.Pow(progress - 1, power) + sign));
 		}
 
 		private static float EaseInOutPower(float progress, int power)
@@ -177,25 +177,25 @@ namespace Duality.Plugins.Companion.Tweens
 			progress *= 2;
 			if (progress < 1)
 			{
-				return (float)Math.Pow(progress, power) / 2f;
+				return MathF.Pow(progress, power) / 2f;
 			}
 			int sign = power % 2 == 0 ? -1 : 1;
-			return (float)(sign / 2.0 * (Math.Pow(progress - 2, power) + sign * 2));
+			return (float)(sign / 2.0 * (MathF.Pow(progress - 2, power) + sign * 2));
 		}
 
 		private static float SineEaseInImpl(float progress)
 		{
-			return (float)Math.Sin(progress * HalfPi - HalfPi) + 1;
+			return MathF.Sin(progress * HalfPi - HalfPi) + 1;
 		}
 
 		private static float SineEaseOutImpl(float progress)
 		{
-			return (float)Math.Sin(progress * HalfPi);
+			return MathF.Sin(progress * HalfPi);
 		}
 
 		private static float SineEaseInOutImpl(float progress)
 		{
-			return (float)(Math.Sin(progress * MathF.Pi - HalfPi) + 1) / 2;
+			return MathF.Sin(progress * MathF.Pi - HalfPi) + 1 / 2f;
 		}
 	}
 }
