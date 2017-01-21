@@ -56,6 +56,7 @@
     <Compile Include="Components\SceneSwitcher.cs" />
     <Compile Include="Drawing\CheckeredBackground.cs" />
     <Compile Include="Drawing\Colors.cs" />
+    <Compile Include="ResNames.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tweens\ColorTween.cs" />

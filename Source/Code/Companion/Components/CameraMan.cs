@@ -4,6 +4,7 @@ using Duality.Editor;
 
 namespace Duality.Plugins.Companion.Components
 {
+	[EditorHintCategory (ResNames.ComponentsEditorCategory)]
 	[RequiredComponent (typeof(Camera))]
 	public class CameraMan : Component, ICmpUpdatable, ICmpInitializable
 	{

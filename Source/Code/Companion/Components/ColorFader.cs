@@ -6,6 +6,7 @@ using Duality.Resources;
 
 namespace Duality.Plugins.Companion.Components
 {
+	[EditorHintCategory (ResNames.ComponentsEditorCategory)]
 	public class ColorFader : OverlayRenderer, ICmpUpdatable
 	{
 		[EditorHintFlags(MemberFlags.Invisible)]

@@ -1,14 +1,10 @@
 ﻿using Duality.Drawing;
 using Duality.Editor;
 using Duality.Resources;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Duality.Plugins.Companion.Drawing
 {
+	[EditorHintCategory (ResNames.DrawingEditorCategory)]
 	public class CheckeredBackground : Component, ICmpRenderer
 	{
 		[DontSerialize] private VertexC1P3T2[] vertices     = new VertexC1P3T2[4];
