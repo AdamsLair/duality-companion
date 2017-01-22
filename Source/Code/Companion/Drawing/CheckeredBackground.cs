@@ -68,7 +68,7 @@ namespace Duality.Plugins.Companion.Drawing
 
 			// Define vertices. Note how we completely ignore the XY position from PreprocessCoords above.
 			// We just render out rect as we intended. It floats around as if stuck on the screen.
-			uvDelta = (device.RefCoord.Xy - lastPosition) / (device.TargetSize);
+			uvDelta = (device.RefCoord.Xy - lastPosition) / (backgroundSize) * device.GetScaleAtZ(Z);
 
 			this.vertices[0].Pos.Xy = this.topLeft;
 			this.vertices[0].Pos.Z = this.posTemp.Z;
