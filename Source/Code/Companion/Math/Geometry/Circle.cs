@@ -4,7 +4,7 @@ namespace Duality.Plugins.Companion.Math.Geometry
 {
 	public struct Circle : IShape, IEquatable<Circle>
 	{
-		public Rect BoundingRectangle { get; }
+		public Rect BoundingRectangle { get { return Rect.Empty; } }
 
 		public Vector2 Center { get; set; }
 

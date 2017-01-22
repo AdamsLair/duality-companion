@@ -4,22 +4,29 @@ using Duality.Resources;
 
 namespace Duality.Plugins.Companion.Drawing
 {
-	[EditorHintCategory (ResNames.DrawingEditorCategory)]
+	[EditorHintCategory(ResNames.DiagnosticsEditorCategory)]
 	public class CheckeredBackground : Component, ICmpRenderer
 	{
-		[DontSerialize] private VertexC1P3T2[] vertices     = new VertexC1P3T2[4];
-		[DontSerialize] private Vector3        fullScreen   = Vector3.Zero;
-		[DontSerialize] private Vector2        uvDelta      = Vector2.Zero;
-		[DontSerialize] private Vector2        lastPosition = Vector2.Zero;
+		[DontSerialize] private VertexC1P3T2[] vertices       = new VertexC1P3T2[4];
+		[DontSerialize] private Vector3        posTemp        = Vector3.Zero;
+		[DontSerialize] private float          scaleTemp      = 0;
+		[DontSerialize] private Vector2        uvDelta        = Vector2.Zero;
+		[DontSerialize] private Vector2        lastPosition   = Vector2.Zero;
+		[DontSerialize] private Vector2        backgroundSize = Vector2.Zero;
+
+		[DontSerialize] private Vector2        topLeft     = Vector2.Zero;
+		[DontSerialize] private Vector2        bottomLeft  = Vector2.Zero;
+		[DontSerialize] private Vector2        bottomRight = Vector2.Zero;
+		[DontSerialize] private Vector2        topRight    = Vector2.Zero;
 
 		public float Z { get; set; }
 
 		public CheckeredBackground()
 		{
 			this.vertices[0].TexCoord = Vector2.Zero;
-			this.vertices[1].TexCoord = Vector2.UnitY;
-			this.vertices[2].TexCoord = Vector2.One;
-			this.vertices[3].TexCoord = Vector2.UnitX; 
+			this.vertices[1].TexCoord = 2 * Vector2.UnitY;
+			this.vertices[2].TexCoord = 2 * Vector2.One;
+			this.vertices[3].TexCoord = 2 * Vector2.UnitX; 
 			
 			this.Z = 500;
 		}
@@ -32,42 +39,58 @@ namespace Duality.Plugins.Companion.Drawing
 
 		public void Draw(Duality.Drawing.IDrawDevice device)
 		{
-			this.fullScreen = device.GetSpaceCoord(DualityApp.TargetResolution - device.RefCoord.Xy);
+			// Find out about the into-camera-space transformation at the object's position
+			this.posTemp = device.RefCoord;
+			this.posTemp.Z = Z;
 
-			this.vertices[0].Pos = device.GetSpaceCoord(Vector2.Zero - device.RefCoord.Xy);
-			this.vertices[0].Pos.Z = device.FocusDist + this.Z;
+			this.scaleTemp = 1.0f;
+			device.PreprocessCoords(ref this.posTemp, ref this.scaleTemp);
 
-			this.vertices[2].Pos = device.GetSpaceCoord(Vector2.One * DualityApp.TargetResolution - device.RefCoord.Xy);
-			this.vertices[2].Pos.Z = device.FocusDist + this.Z;
+			// Define the rect we're going to render
+			backgroundSize = device.TargetSize / this.scaleTemp;
+			backgroundSize.X = backgroundSize.Y = MathF.Max(backgroundSize.X, backgroundSize.Y);
 
-			this.vertices[1].Pos = device.GetSpaceCoord(Vector2.UnitY * DualityApp.TargetResolution - device.RefCoord.Xy);
-			this.vertices[1].Pos.Z = device.FocusDist + this.Z;
+			Rect rectTemp = new Rect(backgroundSize * 2).WithOffset(-backgroundSize);
 
-			this.vertices[3].Pos = device.GetSpaceCoord(Vector2.UnitX * DualityApp.TargetResolution - device.RefCoord.Xy);
-			this.vertices[3].Pos.Z = device.FocusDist + this.Z;
-			/*
-			float scale = 1;
-			device.PreprocessCoords(ref this.vertices[0].Pos, ref scale);
-			device.PreprocessCoords(ref this.vertices[1].Pos, ref scale);
-			device.PreprocessCoords(ref this.vertices[2].Pos, ref scale);
-			device.PreprocessCoords(ref this.vertices[3].Pos, ref scale);
-			*/
-			this.uvDelta = (device.RefCoord.Xy - this.lastPosition) / DualityApp.TargetResolution;
+			this.topLeft = rectTemp.TopLeft;
+			this.bottomLeft = rectTemp.BottomLeft;
+			this.bottomRight = rectTemp.BottomRight;
+			this.topRight = rectTemp.TopRight;
 
+			// Apply object rotation and (object + perspective) scale
+			Vector2 xDot, yDot;
+			MathF.GetTransformDotVec(0, scaleTemp, out xDot, out yDot);
+
+			MathF.TransformDotVec(ref this.topLeft, ref xDot, ref yDot);
+			MathF.TransformDotVec(ref this.bottomLeft, ref xDot, ref yDot);
+			MathF.TransformDotVec(ref this.bottomRight, ref xDot, ref yDot);
+			MathF.TransformDotVec(ref this.topRight, ref xDot, ref yDot);
+
+			// Define vertices. Note how we completely ignore the XY position from PreprocessCoords above.
+			// We just render out rect as we intended. It floats around as if stuck on the screen.
+			uvDelta = (device.RefCoord.Xy - lastPosition) / (device.TargetSize);
+
+			this.vertices[0].Pos.Xy = this.topLeft;
+			this.vertices[0].Pos.Z = this.posTemp.Z;
 			this.vertices[0].TexCoord += this.uvDelta;
-			this.vertices[1].TexCoord += this.uvDelta;
-			this.vertices[2].TexCoord += this.uvDelta;
-			this.vertices[3].TexCoord += this.uvDelta;
-
 			this.vertices[0].Color = ColorRgba.White;
+
+			this.vertices[1].Pos.Xy = this.bottomLeft;
+			this.vertices[1].Pos.Z = this.posTemp.Z;
+			this.vertices[1].TexCoord += this.uvDelta;
 			this.vertices[1].Color = ColorRgba.White;
+
+			this.vertices[2].Pos.Xy = this.bottomRight;
+			this.vertices[2].Pos.Z = this.posTemp.Z;
+			this.vertices[2].TexCoord += this.uvDelta;
 			this.vertices[2].Color = ColorRgba.White;
+
+			this.vertices[3].Pos.Xy = this.topRight;
+			this.vertices[3].Pos.Z = this.posTemp.Z;
+			this.vertices[3].TexCoord += this.uvDelta;
 			this.vertices[3].Color = ColorRgba.White;
 
-			Canvas canvas = new Canvas(device);
-			canvas.State.SetMaterial(Material.Checkerboard);
-			canvas.DrawVertices(this.vertices, VertexMode.Quads);
-
+			device.AddVertices(Material.Checkerboard, VertexMode.Quads, this.vertices);
 			this.lastPosition = device.RefCoord.Xy;
 		}
 
