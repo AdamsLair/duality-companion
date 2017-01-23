@@ -21,6 +21,8 @@ namespace Duality.Plugins.Companion.Drawing
 
 		public float Z { get; set; }
 
+		public ColorRgba Tint { get; set; }
+
 		public CheckeredBackground()
 		{
 			this.vertices[0].TexCoord = Vector2.Zero;
@@ -29,6 +31,7 @@ namespace Duality.Plugins.Companion.Drawing
 			this.vertices[3].TexCoord = 2 * Vector2.UnitX; 
 			
 			this.Z = 500;
+			this.Tint = ColorRgba.White;
 		}
 
 		[EditorHintFlags(MemberFlags.Invisible)]
@@ -73,22 +76,22 @@ namespace Duality.Plugins.Companion.Drawing
 			this.vertices[0].Pos.Xy = this.topLeft;
 			this.vertices[0].Pos.Z = this.posTemp.Z;
 			this.vertices[0].TexCoord += this.uvDelta;
-			this.vertices[0].Color = ColorRgba.White;
+			this.vertices[0].Color = this.Tint;
 
 			this.vertices[1].Pos.Xy = this.bottomLeft;
 			this.vertices[1].Pos.Z = this.posTemp.Z;
 			this.vertices[1].TexCoord += this.uvDelta;
-			this.vertices[1].Color = ColorRgba.White;
+			this.vertices[1].Color = this.Tint;
 
 			this.vertices[2].Pos.Xy = this.bottomRight;
 			this.vertices[2].Pos.Z = this.posTemp.Z;
 			this.vertices[2].TexCoord += this.uvDelta;
-			this.vertices[2].Color = ColorRgba.White;
+			this.vertices[2].Color = this.Tint;
 
 			this.vertices[3].Pos.Xy = this.topRight;
 			this.vertices[3].Pos.Z = this.posTemp.Z;
 			this.vertices[3].TexCoord += this.uvDelta;
-			this.vertices[3].Color = ColorRgba.White;
+			this.vertices[3].Color = this.Tint;
 
 			device.AddVertices(Material.Checkerboard, VertexMode.Quads, this.vertices);
 			this.lastPosition = device.RefCoord.Xy;

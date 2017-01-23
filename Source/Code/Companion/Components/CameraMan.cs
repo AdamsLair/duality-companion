@@ -41,29 +41,42 @@ namespace Duality.Plugins.Companion.Components
 		[DontSerialize] private float          shakeDamping	  = 0;
 		[DontSerialize] private uint           shakeSpeed     = 0;
 		[DontSerialize] private float          shakeStrength  = 0;
-		[DontSerialize]	private Vector2		   lastShake      = Vector2.Zero;
+		[DontSerialize]	private Vector3		   lastMovement   = Vector3.Zero;
 		[DontSerialize]	private Transform      transform      = null;
 
 		/// <summary>
-		/// The 
+		/// The position that the Camera should be following
 		/// </summary>
 		public Transform Target { get; set; }
 
+		/// <summary>
+		/// 
+		/// </summary>
 		[EditorHintRange(0, .9f)]
 		public float TrailingDistance { get; set; }
 
+		/// <summary>
+		/// If set to true, the Camera will always be aligned with the Target's angle
+		/// </summary>
 		public bool AlignWithTargetDirection { get; set; }
+
+		/// <summary>
+		/// It indicates by how much the Camera will zoom out (decrease its own Z) for each unit of speed it is moving at.
+		/// If set to a negative value, the Camera will actually zoom in.
+		/// </summary>
+		public float LeanBackRatio { get; set; }
 
 		public CameraMan()
 		{
 			this.Target = null;
-			this.TrailingDistance = .1f;
+			this.TrailingDistance = .5f;
 			this.AlignWithTargetDirection = false;
+			this.LeanBackRatio = 0;
 		}
 
 		void ICmpUpdatable.OnUpdate()
 		{
-			this.transform.MoveBy(-this.lastShake);
+			this.transform.MoveBy(-this.lastMovement);
 
 			// Follow target
 			if (this.Target != null)
@@ -77,17 +90,18 @@ namespace Duality.Plugins.Companion.Components
 			// Add shake effect
 			if (this.shakeGenerator != null)
 			{
-				this.lastShake = this.shakeGenerator((float)Time.GameTimer.TotalSeconds * this.shakeSpeed) * this.shakeStrength;
+				this.lastMovement.Xy = this.shakeGenerator((float)Time.GameTimer.TotalSeconds * this.shakeSpeed) * this.shakeStrength;
 				this.shakeStrength -= this.shakeDamping * Time.SPFMult * Time.TimeMult;
 
 				if (this.shakeStrength <= 1f)
 				{
 					this.shakeGenerator = null;
-					this.lastShake = Vector2.Zero;
+					this.lastMovement.Xy = Vector2.Zero;
 				}
-
-				this.GameObj.Transform.MoveBy (this.lastShake);
 			}
+
+			this.lastMovement.Z = -(this.transform.Vel.Xy.Length * this.LeanBackRatio);
+			this.transform.MoveBy(this.lastMovement);
 		}
 
 		/// <summary>
