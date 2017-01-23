@@ -81,8 +81,7 @@ namespace Duality.Plugins.Companion.Audio
 			}
 			musicInstance = DualityApp.Sound.PlaySound (music);
 			musicInstance.Looped = looped;
-			musicInstance.Volume = 0f;
-			musicInstance.FadeTo (volume, fadeSeconds);
+			musicInstance.BeginFadeIn (fadeSeconds);
 		}
 
 		/// <summary>
