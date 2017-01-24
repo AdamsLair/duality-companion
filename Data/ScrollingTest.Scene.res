@@ -170,36 +170,18 @@
             <vel dataType="Struct" type="Duality.Vector3" />
             <velAbs dataType="Struct" type="Duality.Vector3" />
           </item>
-          <item dataType="Struct" type="Duality.Plugins.Companion.Drawing.PlaneRenderer" id="756135127">
-            <_x003C_ColorTint_x003E_k__BackingField dataType="Struct" type="Duality.Drawing.ColorRgba">
-              <A dataType="Byte">255</A>
-              <B dataType="Byte">255</B>
-              <G dataType="Byte">255</G>
-              <R dataType="Byte">255</R>
-            </_x003C_ColorTint_x003E_k__BackingField>
-            <_x003C_CustomMaterial_x003E_k__BackingField dataType="Struct" type="Duality.ContentRef`1[[Duality.Resources.Material]]" />
-            <_x003C_Flip_x003E_k__BackingField dataType="Enum" type="Duality.Components.Renderers.SpriteRenderer+FlipMode" name="None" value="0" />
-            <_x003C_Material_x003E_k__BackingField dataType="Struct" type="Duality.ContentRef`1[[Duality.Resources.Material]]">
-              <contentPath dataType="String">Default:Material:DualityLogoBig</contentPath>
-            </_x003C_Material_x003E_k__BackingField>
-            <_x003C_Scrolling_x003E_k__BackingField dataType="Enum" type="Duality.Plugins.Companion.Drawing.PlaneRenderer+ScrollingMode" name="Horiziontal" value="0" />
-            <active dataType="Bool">true</active>
-            <gameobj dataType="ObjectRef">3770853638</gameobj>
-          </item>
         </_items>
-        <_size dataType="Int">2</_size>
-        <_version dataType="Int">2</_version>
+        <_size dataType="Int">1</_size>
+        <_version dataType="Int">5</_version>
       </compList>
       <compMap dataType="Struct" type="System.Collections.Generic.Dictionary`2[[System.Type],[Duality.Component]]" id="3193496174" surrogate="true">
         <header />
         <body>
           <keys dataType="Array" type="System.Object[]" id="323014818">
             <item dataType="ObjectRef">2729498350</item>
-            <item dataType="Type" id="362280720" value="Duality.Plugins.Companion.Drawing.PlaneRenderer" />
           </keys>
           <values dataType="Array" type="System.Object[]" id="1239005962">
             <item dataType="ObjectRef">1836201274</item>
-            <item dataType="ObjectRef">756135127</item>
           </values>
         </body>
       </compMap>

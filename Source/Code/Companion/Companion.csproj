@@ -59,7 +59,10 @@
     <Compile Include="Drawing\CheckeredBackground.cs" />
     <Compile Include="Drawing\Colors.cs" />
     <Compile Include="Math\Geometry\Circle.cs" />
+    <Compile Include="Math\Geometry\GeometryHelper.cs" />
+    <Compile Include="Math\Geometry\Intersection.cs" />
     <Compile Include="Math\Geometry\IShape.cs" />
+    <Compile Include="Math\Geometry\Line2D.cs" />
     <Compile Include="ResNames.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
