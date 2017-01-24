@@ -219,12 +219,12 @@
       <compList dataType="Struct" type="System.Collections.Generic.List`1[[Duality.Component]]" id="869925864">
         <_items dataType="Array" type="Duality.Component[]" id="784643116" length="4">
           <item dataType="Struct" type="Duality.Plugins.Companion.Drawing.CheckeredBackground" id="3644480556">
-            <_x003C_Tint_x003E_k__BackingField dataType="Struct" type="Duality.Drawing.ColorRgba">
+            <_x003C_ColorTint_x003E_k__BackingField dataType="Struct" type="Duality.Drawing.ColorRgba">
               <A dataType="Byte">255</A>
-              <B dataType="Byte">0</B>
-              <G dataType="Byte">0</G>
-              <R dataType="Byte">68</R>
-            </_x003C_Tint_x003E_k__BackingField>
+              <B dataType="Byte">14</B>
+              <G dataType="Byte">3</G>
+              <R dataType="Byte">107</R>
+            </_x003C_ColorTint_x003E_k__BackingField>
             <_x003C_Z_x003E_k__BackingField dataType="Float">500</_x003C_Z_x003E_k__BackingField>
             <active dataType="Bool">true</active>
             <gameobj dataType="ObjectRef">662640062</gameobj>

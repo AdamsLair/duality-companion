@@ -55,6 +55,7 @@
     <Compile Include="Components\OverlayRenderer.cs" />
     <Compile Include="Components\ColorFader.cs" />
     <Compile Include="Components\SceneSwitcher.cs" />
+    <Compile Include="Drawing\PlaneRenderer.cs" />
     <Compile Include="Drawing\CheckeredBackground.cs" />
     <Compile Include="Drawing\Colors.cs" />
     <Compile Include="Math\Geometry\Circle.cs" />

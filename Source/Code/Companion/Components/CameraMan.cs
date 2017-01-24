@@ -50,7 +50,9 @@ namespace Duality.Plugins.Companion.Components
 		public Transform Target { get; set; }
 
 		/// <summary>
-		/// 
+		/// The percentage of distance to the Target the Camera will move at each frame
+		/// 0: don't follow
+		/// 1: follow exactly
 		/// </summary>
 		[EditorHintRange(0, .9f)]
 		public float TrailingDistance { get; set; }
@@ -74,7 +76,7 @@ namespace Duality.Plugins.Companion.Components
 			this.LeanBackRatio = 0;
 		}
 
-		void ICmpUpdatable.OnUpdate()
+		public void OnUpdate()
 		{
 			this.transform.MoveBy(-this.lastMovement);
 
@@ -161,12 +163,12 @@ namespace Duality.Plugins.Companion.Components
 			this.shakeSpeed = speed;
 		}
 
-		void ICmpInitializable.OnInit(Component.InitContext context)
+		public void OnInit(Component.InitContext context)
 		{
 			this.transform = this.GameObj.Transform;
 		}
 
-		void ICmpInitializable.OnShutdown(Component.ShutdownContext context)
+		public void OnShutdown(Component.ShutdownContext context)
 		{
 			// nothing to do here
 		}

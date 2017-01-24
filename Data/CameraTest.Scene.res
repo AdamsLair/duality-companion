@@ -187,7 +187,7 @@
               <vel dataType="Struct" type="Duality.Vector3" />
               <velAbs dataType="Struct" type="Duality.Vector3" />
             </_x003C_Target_x003E_k__BackingField>
-            <_x003C_TrailingDistance_x003E_k__BackingField dataType="Float">0.9</_x003C_TrailingDistance_x003E_k__BackingField>
+            <_x003C_TrailingDistance_x003E_k__BackingField dataType="Float">0.1</_x003C_TrailingDistance_x003E_k__BackingField>
             <active dataType="Bool">true</active>
             <gameobj dataType="ObjectRef">3818958152</gameobj>
           </item>
@@ -231,12 +231,12 @@
       <compList dataType="Struct" type="System.Collections.Generic.List`1[[Duality.Component]]" id="2665409379">
         <_items dataType="Array" type="Duality.Component[]" id="111681254" length="4">
           <item dataType="Struct" type="Duality.Plugins.Companion.Drawing.CheckeredBackground" id="3977443087">
-            <_x003C_Tint_x003E_k__BackingField dataType="Struct" type="Duality.Drawing.ColorRgba">
+            <_x003C_ColorTint_x003E_k__BackingField dataType="Struct" type="Duality.Drawing.ColorRgba">
               <A dataType="Byte">255</A>
-              <B dataType="Byte">65</B>
-              <G dataType="Byte">65</G>
-              <R dataType="Byte">65</R>
-            </_x003C_Tint_x003E_k__BackingField>
+              <B dataType="Byte">196</B>
+              <G dataType="Byte">196</G>
+              <R dataType="Byte">196</R>
+            </_x003C_ColorTint_x003E_k__BackingField>
             <_x003C_Z_x003E_k__BackingField dataType="Float">500</_x003C_Z_x003E_k__BackingField>
             <active dataType="Bool">true</active>
             <gameobj dataType="ObjectRef">995602593</gameobj>
