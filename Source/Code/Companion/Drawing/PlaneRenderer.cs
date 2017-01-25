@@ -31,7 +31,7 @@ namespace Duality.Plugins.Companion.Drawing
 		[DontSerialize] private Vector2        bottomRight = Vector2.Zero;
 		[DontSerialize] private Vector2        topRight    = Vector2.Zero;
 
-		public ContentRef<Material> Material {get; set;}
+		public ContentRef<Material> SharedMaterial {get; set;}
 
 		public ContentRef<Material> CustomMaterial { get; set; }
 
@@ -46,7 +46,7 @@ namespace Duality.Plugins.Companion.Drawing
 		public PlaneRenderer()
 		{
 			this.ColorTint = ColorRgba.White;
-			this.Material = Duality.Resources.Material.Checkerboard;
+			this.SharedMaterial = Duality.Resources.Material.Checkerboard;
 			this.Offset = Vector2.Zero;
 
 			this.ScrollingMultiplier = 1;
@@ -81,8 +81,8 @@ namespace Duality.Plugins.Companion.Drawing
 			}
 			else
 			{
-				textureSize = this.Material.Res.MainTexture.Res.Size;
-				uvSize = this.Material.Res.MainTexture.Res.UVRatio;
+				textureSize = this.SharedMaterial.Res.MainTexture.Res.Size;
+				uvSize = this.SharedMaterial.Res.MainTexture.Res.UVRatio;
 			}
 
 			// How big will the texture appear on screen
@@ -157,7 +157,7 @@ namespace Duality.Plugins.Companion.Drawing
 			if(this.CustomMaterial.IsAvailable)
 				device.AddVertices(this.CustomMaterial, VertexMode.Quads, this.vertices);
 			else
-				device.AddVertices(this.Material, VertexMode.Quads, this.vertices);
+				device.AddVertices(this.SharedMaterial, VertexMode.Quads, this.vertices);
 		}
 
 		public bool IsVisible(Duality.Drawing.IDrawDevice device)
