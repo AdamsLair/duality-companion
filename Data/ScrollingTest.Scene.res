@@ -176,9 +176,8 @@
               <R dataType="Byte">240</R>
             </_x003C_ColorTint_x003E_k__BackingField>
             <_x003C_CustomMaterial_x003E_k__BackingField dataType="Struct" type="Duality.ContentRef`1[[Duality.Resources.Material]]" />
-            <_x003C_Flip_x003E_k__BackingField dataType="Enum" type="Duality.Components.Renderers.SpriteRenderer+FlipMode" name="None" value="0" />
             <_x003C_Material_x003E_k__BackingField dataType="Struct" type="Duality.ContentRef`1[[Duality.Resources.Material]]">
-              <contentPath dataType="String">Data\Graphics\alpha.Material.res</contentPath>
+              <contentPath dataType="String">Data\Graphics\arrow.Material.res</contentPath>
             </_x003C_Material_x003E_k__BackingField>
             <_x003C_Offset_x003E_k__BackingField dataType="Struct" type="Duality.Vector2" />
             <_x003C_Scrolling_x003E_k__BackingField dataType="Enum" type="Duality.Plugins.Companion.Drawing.PlaneRenderer+ScrollingMode" name="Horiziontal" value="0" />
@@ -253,7 +252,6 @@
               <R dataType="Byte">10</R>
             </_x003C_ColorTint_x003E_k__BackingField>
             <_x003C_CustomMaterial_x003E_k__BackingField dataType="Struct" type="Duality.ContentRef`1[[Duality.Resources.Material]]" />
-            <_x003C_Flip_x003E_k__BackingField dataType="Enum" type="Duality.Components.Renderers.SpriteRenderer+FlipMode" name="None" value="0" />
             <_x003C_Material_x003E_k__BackingField dataType="Struct" type="Duality.ContentRef`1[[Duality.Resources.Material]]">
               <contentPath dataType="String">Data\Graphics\alpha.Material.res</contentPath>
             </_x003C_Material_x003E_k__BackingField>

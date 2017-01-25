@@ -45,11 +45,6 @@ namespace Duality.Plugins.Companion.Drawing
 
 		public PlaneRenderer()
 		{
-			this.vertices[0].TexCoord = Vector2.Zero;
-			this.vertices[1].TexCoord = 2 * Vector2.UnitY;
-			this.vertices[2].TexCoord = 2 * Vector2.One;
-			this.vertices[3].TexCoord = 2 * Vector2.UnitX; 
-			
 			this.ColorTint = ColorRgba.White;
 			this.Material = Duality.Resources.Material.Checkerboard;
 			this.Offset = Vector2.Zero;
@@ -121,7 +116,7 @@ namespace Duality.Plugins.Companion.Drawing
 			Rect uvRect = new Rect(uvSize).WithOffset(-uvSize / 2);
 
 			if (this.Scrolling == ScrollingMode.Horiziontal) uvRect = uvRect.WithOffset(0, uvSize.Y / 2);
-			if (this.Scrolling == ScrollingMode.Horiziontal) uvRect = uvRect.WithOffset(uvSize.X / 2, 0);
+			if (this.Scrolling == ScrollingMode.Vertical) uvRect = uvRect.WithOffset(uvSize.X / 2, 0);
 			
 			uvDelta *= this.transform.Scale * this.scaleTemp * ScrollingMultiplier;
 
