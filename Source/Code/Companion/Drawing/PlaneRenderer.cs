@@ -39,8 +39,6 @@ namespace Duality.Plugins.Companion.Drawing
 
 		public ColorRgba ColorTint { get; set; }
 
-		public SpriteRenderer.FlipMode Flip { get; set; }
-
 		public Vector2 Offset { get; set; }
 
 		public float ScrollingMultiplier { get; set; }
