@@ -5,7 +5,7 @@ namespace Duality.Plugins.Companion.Math.Geometry
 	/// <summary>
 	/// Represents a 2d circle.
 	/// </summary>
-	public struct Circle : IShape, IEquatable<Circle>
+	public class Circle : IShape, IEquatable<Circle>
 	{
 		/// <summary>
 		/// Gets the bounding rectangle of the circle.

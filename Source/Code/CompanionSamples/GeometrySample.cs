@@ -8,7 +8,7 @@ namespace Duality.Plugins.Companion.Samples
 	[EditorHintCategory(ResNames.SampleComponentCategory)]
 	public class GeometrySample : OverlayRenderer, ICmpUpdatable
 	{
-		public override float BoundRadius { get; }
+		public override float BoundRadius { get { return 0; } }
 
 		public Line2D Line
 		{

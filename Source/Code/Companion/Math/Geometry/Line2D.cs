@@ -5,7 +5,7 @@ namespace Duality.Plugins.Companion.Math.Geometry
 	/// <summary>
 	/// Represents a 2d line.
 	/// </summary>
-	public struct Line2D : IEquatable<Line2D>, IShape
+	public class Line2D : IEquatable<Line2D>, IShape
 	{
 		/// <summary>
 		/// Gets or sets the first vector of the line.

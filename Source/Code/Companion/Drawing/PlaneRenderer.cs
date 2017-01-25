@@ -41,6 +41,10 @@ namespace Duality.Plugins.Companion.Drawing
 
 		public SpriteRenderer.FlipMode Flip { get; set; }
 
+		public Vector2 Offset { get; set; }
+
+		public float ScrollingMultiplier { get; set; }
+
 		public PlaneRenderer()
 		{
 			this.vertices[0].TexCoord = Vector2.Zero;
@@ -49,6 +53,10 @@ namespace Duality.Plugins.Companion.Drawing
 			this.vertices[3].TexCoord = 2 * Vector2.UnitX; 
 			
 			this.ColorTint = ColorRgba.White;
+			this.Material = Duality.Resources.Material.Checkerboard;
+			this.Offset = Vector2.Zero;
+
+			this.ScrollingMultiplier = 1;
 		}
 
 		[EditorHintFlags(MemberFlags.Invisible)]
@@ -73,19 +81,21 @@ namespace Duality.Plugins.Companion.Drawing
 			Vector2 textureSize = Vector2.One;
 			Vector2 uvSize = Vector2.Zero;
 
-			if (this.CustomMaterial.IsExplicitNull)
+			if (this.CustomMaterial.IsAvailable)
 			{
-				textureSize = this.Material.Res.MainTexture.Res.Size;
-				uvSize = this.Material.Res.MainTexture.Res.UVRatio;
+				textureSize = this.CustomMaterial.Res.MainTexture.Res.Size;
+				uvSize = this.CustomMaterial.Res.MainTexture.Res.UVRatio;
 			}
 			else
 			{
 				textureSize = this.Material.Res.MainTexture.Res.Size;
-				uvSize = this.CustomMaterial.Res.MainTexture.Res.UVRatio;
+				uvSize = this.Material.Res.MainTexture.Res.UVRatio;
 			}
 
-			// Define the rect we're going to render
+			// How big will the texture appear on screen
 			Vector2 textureScaled = textureSize * this.transform.Scale * this.scaleTemp;
+
+			// and how much will we have to scale it to make it fill the screen
 			Vector2 textureScale = device.TargetSize / textureScaled;
 
 			// Multiply by 2 to be sure that the sprite doesn't end exactly on the side of the screen
@@ -103,6 +113,20 @@ namespace Duality.Plugins.Companion.Drawing
 			// Calculate the "actual" texture size on screen
 			textureSize *= this.transform.Scale * this.scaleTemp;
 
+			uvDelta = uvSize / textureScaled;
+			uvSize *= textureSize / textureScaled;
+
+			uvDelta *= (device.RefCoord.Xy - this.Offset);
+			if (this.Scrolling == ScrollingMode.Horiziontal) uvDelta.Y = 0;
+			if (this.Scrolling == ScrollingMode.Vertical) uvDelta.X = 0;
+
+			Rect uvRect = new Rect(uvSize).WithOffset(-uvSize / 2);
+
+			if (this.Scrolling == ScrollingMode.Horiziontal) uvRect = uvRect.WithOffset(0, uvSize.Y / 2);
+			if (this.Scrolling == ScrollingMode.Horiziontal) uvRect = uvRect.WithOffset(uvSize.X / 2, 0);
+			
+			uvDelta *= this.transform.Scale * this.scaleTemp * ScrollingMultiplier;
+
 			// Apply object rotation and (object + perspective) scale
 			Vector2 xDot, yDot;
 			MathF.GetTransformDotVec(this.transform.Angle, this.transform.Scale * this.scaleTemp, out xDot, out yDot);
@@ -112,36 +136,35 @@ namespace Duality.Plugins.Companion.Drawing
 			MathF.TransformDotVec(ref this.bottomRight, ref xDot, ref yDot);
 			MathF.TransformDotVec(ref this.topRight, ref xDot, ref yDot);
 
-			// Define vertices. Note how we completely ignore the XY position from PreprocessCoords above.
-			// We just render out rect as we intended. It floats around as if stuck on the screen.
+			// Define vertices. 
 			this.vertices[0].Pos.X = this.posTemp.X + this.topLeft.X;
 			this.vertices[0].Pos.Y = this.posTemp.Y + this.topLeft.Y;
 			this.vertices[0].Pos.Z = this.posTemp.Z;
-			this.vertices[0].TexCoord = Vector2.Zero;
+			this.vertices[0].TexCoord = uvRect.TopLeft + uvDelta;
 			this.vertices[0].Color = this.ColorTint;
 
 			this.vertices[1].Pos.X = this.posTemp.X + this.bottomLeft.X;
 			this.vertices[1].Pos.Y = this.posTemp.Y + this.bottomLeft.Y;
 			this.vertices[1].Pos.Z = this.posTemp.Z;
-			this.vertices[1].TexCoord = Vector2.UnitY * uvSize;
+			this.vertices[1].TexCoord = uvRect.BottomLeft + uvDelta; 
 			this.vertices[1].Color = this.ColorTint;
 
 			this.vertices[2].Pos.X = this.posTemp.X + this.bottomRight.X;
 			this.vertices[2].Pos.Y = this.posTemp.Y + this.bottomRight.Y;
 			this.vertices[2].Pos.Z = this.posTemp.Z;
-			this.vertices[2].TexCoord = Vector2.One * uvSize;
+			this.vertices[2].TexCoord = uvRect.BottomRight + uvDelta; 
 			this.vertices[2].Color = this.ColorTint;
 
 			this.vertices[3].Pos.X = this.posTemp.X + this.topRight.X;
 			this.vertices[3].Pos.Y = this.posTemp.Y + this.topRight.Y;
 			this.vertices[3].Pos.Z = this.posTemp.Z;
-			this.vertices[3].TexCoord = Vector2.UnitX * uvSize;
+			this.vertices[3].TexCoord = uvRect.TopRight + uvDelta; 
 			this.vertices[3].Color = this.ColorTint;
 
-			if(this.CustomMaterial.IsExplicitNull)
-				device.AddVertices(this.Material, VertexMode.Quads, this.vertices);
-			else
+			if(this.CustomMaterial.IsAvailable)
 				device.AddVertices(this.CustomMaterial, VertexMode.Quads, this.vertices);
+			else
+				device.AddVertices(this.Material, VertexMode.Quads, this.vertices);
 		}
 
 		public bool IsVisible(Duality.Drawing.IDrawDevice device)
