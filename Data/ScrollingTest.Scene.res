@@ -169,6 +169,7 @@
             <velAbs dataType="Struct" type="Duality.Vector3" />
           </item>
           <item dataType="Struct" type="Duality.Plugins.Companion.Drawing.PlaneRenderer" id="756135127">
+            <_x003C_AlignToPixelGrid_x003E_k__BackingField dataType="Bool">true</_x003C_AlignToPixelGrid_x003E_k__BackingField>
             <_x003C_ColorTint_x003E_k__BackingField dataType="Struct" type="Duality.Drawing.ColorRgba">
               <A dataType="Byte">255</A>
               <B dataType="Byte">13</B>
@@ -182,6 +183,7 @@
             <_x003C_SharedMaterial_x003E_k__BackingField dataType="Struct" type="Duality.ContentRef`1[[Duality.Resources.Material]]">
               <contentPath dataType="String">Data\Graphics\alpha.Material.res</contentPath>
             </_x003C_SharedMaterial_x003E_k__BackingField>
+            <_x003C_VisibilityGroup_x003E_k__BackingField dataType="Enum" type="Duality.Drawing.VisibilityFlag" name="Group0" value="1" />
             <active dataType="Bool">true</active>
             <gameobj dataType="ObjectRef">3770853638</gameobj>
           </item>
@@ -245,6 +247,7 @@
             <velAbs dataType="Struct" type="Duality.Vector3" />
           </item>
           <item dataType="Struct" type="Duality.Plugins.Companion.Drawing.PlaneRenderer" id="854620414">
+            <_x003C_AlignToPixelGrid_x003E_k__BackingField dataType="Bool">true</_x003C_AlignToPixelGrid_x003E_k__BackingField>
             <_x003C_ColorTint_x003E_k__BackingField dataType="Struct" type="Duality.Drawing.ColorRgba">
               <A dataType="Byte">255</A>
               <B dataType="Byte">234</B>
@@ -258,6 +261,7 @@
             <_x003C_SharedMaterial_x003E_k__BackingField dataType="Struct" type="Duality.ContentRef`1[[Duality.Resources.Material]]">
               <contentPath dataType="String">Data\Graphics\arrow.Material.res</contentPath>
             </_x003C_SharedMaterial_x003E_k__BackingField>
+            <_x003C_VisibilityGroup_x003E_k__BackingField dataType="Enum" type="Duality.Drawing.VisibilityFlag" name="Group0" value="1" />
             <active dataType="Bool">true</active>
             <gameobj dataType="ObjectRef">3869338925</gameobj>
           </item>

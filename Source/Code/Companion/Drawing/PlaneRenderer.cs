@@ -17,21 +17,32 @@ namespace Duality.Plugins.Companion.Drawing
 			Both
 		}
 
-		[DontSerialize] private VertexC1P3T2[] vertices       = new VertexC1P3T2[4];
-		[DontSerialize] private Vector3        posTemp        = Vector3.Zero;
-		[DontSerialize] private float          scaleTemp      = 0;
-		[DontSerialize] private Vector2        uvDelta        = Vector2.Zero;
-		[DontSerialize] private Vector2        sourcePosition = Vector2.Zero;
-		[DontSerialize] private Vector2        backgroundSize = Vector2.Zero;
+		[DontSerialize]
+		private VertexC1P3T2[] vertices = new VertexC1P3T2[4];
+		[DontSerialize]
+		private Vector3 posTemp = Vector3.Zero;
+		[DontSerialize]
+		private float scaleTemp = 0;
+		[DontSerialize]
+		private Vector2 uvDelta = Vector2.Zero;
+		[DontSerialize]
+		private Vector2 sourcePosition = Vector2.Zero;
+		[DontSerialize]
+		private Vector2 backgroundSize = Vector2.Zero;
 
-		[DontSerialize] private Transform      transform;
+		[DontSerialize]
+		private Transform transform;
 
-		[DontSerialize] private Vector2        topLeft     = Vector2.Zero;
-		[DontSerialize] private Vector2        bottomLeft  = Vector2.Zero;
-		[DontSerialize] private Vector2        bottomRight = Vector2.Zero;
-		[DontSerialize] private Vector2        topRight    = Vector2.Zero;
+		[DontSerialize]
+		private Vector2 topLeft = Vector2.Zero;
+		[DontSerialize]
+		private Vector2 bottomLeft = Vector2.Zero;
+		[DontSerialize]
+		private Vector2 bottomRight = Vector2.Zero;
+		[DontSerialize]
+		private Vector2 topRight = Vector2.Zero;
 
-		public ContentRef<Material> SharedMaterial {get; set;}
+		public ContentRef<Material> SharedMaterial { get; set; }
 
 		public ContentRef<Material> CustomMaterial { get; set; }
 
@@ -43,13 +54,26 @@ namespace Duality.Plugins.Companion.Drawing
 
 		public float ScrollingMultiplier { get; set; }
 
+		public VisibilityFlag VisibilityGroup { get; set; }
+
+		/// <summary>
+		/// [GET / SET] Specified whether or not the rendered sprite will be aligned to actual screen pixels.
+		/// </summary>
+		public bool AlignToPixelGrid { get; set; }
+
 		public PlaneRenderer()
 		{
+			this.vertices[0].TexCoord = Vector2.Zero;
+			this.vertices[1].TexCoord = 2 * Vector2.UnitY;
+			this.vertices[2].TexCoord = 2 * Vector2.One;
+			this.vertices[3].TexCoord = 2 * Vector2.UnitX;
+
 			this.ColorTint = ColorRgba.White;
 			this.SharedMaterial = Duality.Resources.Material.Checkerboard;
 			this.Offset = Vector2.Zero;
 
 			this.ScrollingMultiplier = 1;
+			this.VisibilityGroup = VisibilityFlag.Group0;
 		}
 
 		[EditorHintFlags(MemberFlags.Invisible)]
@@ -97,7 +121,7 @@ namespace Duality.Plugins.Companion.Drawing
 			if (this.Scrolling != ScrollingMode.Vertical) textureSize.X *= textureScale.X * 2;
 
 			Rect rectTemp = new Rect(textureSize).WithOffset(-textureSize / 2);
-			
+
 			this.topLeft = rectTemp.TopLeft;
 			this.bottomLeft = rectTemp.BottomLeft;
 			this.bottomRight = rectTemp.BottomRight;
@@ -106,19 +130,19 @@ namespace Duality.Plugins.Companion.Drawing
 			// Calculate the "actual" texture size on screen
 			textureSize *= this.transform.Scale * this.scaleTemp;
 
-			uvDelta = uvSize / textureScaled;
+			this.uvDelta = uvSize / textureScaled;
 			uvSize *= textureSize / textureScaled;
 
 			uvDelta *= (device.RefCoord.Xy - this.Offset);
-			if (this.Scrolling == ScrollingMode.Horiziontal) uvDelta.Y = 0;
-			if (this.Scrolling == ScrollingMode.Vertical) uvDelta.X = 0;
+			if (this.Scrolling == ScrollingMode.Horiziontal) this.uvDelta.Y = 0;
+			if (this.Scrolling == ScrollingMode.Vertical) this.uvDelta.X = 0;
 
 			Rect uvRect = new Rect(uvSize).WithOffset(-uvSize / 2);
 
 			if (this.Scrolling == ScrollingMode.Horiziontal) uvRect = uvRect.WithOffset(0, uvSize.Y / 2);
-			if (this.Scrolling == ScrollingMode.Vertical) uvRect = uvRect.WithOffset(uvSize.X / 2, 0);
-			
-			uvDelta *= this.transform.Scale * this.scaleTemp * ScrollingMultiplier;
+			if (this.Scrolling == ScrollingMode.Horiziontal) uvRect = uvRect.WithOffset(uvSize.X / 2, 0);
+
+			this.uvDelta *= this.transform.Scale * this.scaleTemp * this.ScrollingMultiplier;
 
 			// Apply object rotation and (object + perspective) scale
 			Vector2 xDot, yDot;
@@ -133,37 +157,68 @@ namespace Duality.Plugins.Companion.Drawing
 			this.vertices[0].Pos.X = this.posTemp.X + this.topLeft.X;
 			this.vertices[0].Pos.Y = this.posTemp.Y + this.topLeft.Y;
 			this.vertices[0].Pos.Z = this.posTemp.Z;
-			this.vertices[0].TexCoord = uvRect.TopLeft + uvDelta;
+			this.vertices[0].TexCoord = uvRect.TopLeft + this.uvDelta;
 			this.vertices[0].Color = this.ColorTint;
 
 			this.vertices[1].Pos.X = this.posTemp.X + this.bottomLeft.X;
 			this.vertices[1].Pos.Y = this.posTemp.Y + this.bottomLeft.Y;
 			this.vertices[1].Pos.Z = this.posTemp.Z;
-			this.vertices[1].TexCoord = uvRect.BottomLeft + uvDelta; 
+			this.vertices[1].TexCoord = uvRect.BottomLeft + this.uvDelta;
 			this.vertices[1].Color = this.ColorTint;
 
 			this.vertices[2].Pos.X = this.posTemp.X + this.bottomRight.X;
 			this.vertices[2].Pos.Y = this.posTemp.Y + this.bottomRight.Y;
 			this.vertices[2].Pos.Z = this.posTemp.Z;
-			this.vertices[2].TexCoord = uvRect.BottomRight + uvDelta; 
+			this.vertices[2].TexCoord = uvRect.BottomRight + this.uvDelta;
 			this.vertices[2].Color = this.ColorTint;
 
 			this.vertices[3].Pos.X = this.posTemp.X + this.topRight.X;
 			this.vertices[3].Pos.Y = this.posTemp.Y + this.topRight.Y;
 			this.vertices[3].Pos.Z = this.posTemp.Z;
-			this.vertices[3].TexCoord = uvRect.TopRight + uvDelta; 
+			this.vertices[3].TexCoord = uvRect.TopRight + this.uvDelta;
 			this.vertices[3].Color = this.ColorTint;
 
-			if(this.CustomMaterial.IsAvailable)
+			if (this.AlignToPixelGrid)
+			{
+				this.vertices[0].Pos.X = MathF.Round(this.vertices[0].Pos.X);
+				this.vertices[1].Pos.X = MathF.Round(this.vertices[1].Pos.X);
+				this.vertices[2].Pos.X = MathF.Round(this.vertices[2].Pos.X);
+				this.vertices[3].Pos.X = MathF.Round(this.vertices[3].Pos.X);
+
+				if (MathF.RoundToInt(device.TargetSize.X) != (MathF.RoundToInt(device.TargetSize.X) / 2) * 2)
+				{
+					this.vertices[0].Pos.X += 0.5f;
+					this.vertices[1].Pos.X += 0.5f;
+					this.vertices[2].Pos.X += 0.5f;
+					this.vertices[3].Pos.X += 0.5f;
+				}
+
+				this.vertices[0].Pos.Y = MathF.Round(this.vertices[0].Pos.Y);
+				this.vertices[1].Pos.Y = MathF.Round(this.vertices[1].Pos.Y);
+				this.vertices[2].Pos.Y = MathF.Round(this.vertices[2].Pos.Y);
+				this.vertices[3].Pos.Y = MathF.Round(this.vertices[3].Pos.Y);
+
+				if (MathF.RoundToInt(device.TargetSize.Y) != (MathF.RoundToInt(device.TargetSize.Y) / 2) * 2)
+				{
+					this.vertices[0].Pos.Y += 0.5f;
+					this.vertices[1].Pos.Y += 0.5f;
+					this.vertices[2].Pos.Y += 0.5f;
+					this.vertices[3].Pos.Y += 0.5f;
+				}
+			}
+
+			if (this.CustomMaterial.IsAvailable)
 				device.AddVertices(this.CustomMaterial, VertexMode.Quads, this.vertices);
 			else
 				device.AddVertices(this.SharedMaterial, VertexMode.Quads, this.vertices);
 		}
 
-		public bool IsVisible(Duality.Drawing.IDrawDevice device)
+		public bool IsVisible(IDrawDevice device)
 		{
-			return (device.VisibilityMask & VisibilityFlag.AllGroups) != VisibilityFlag.None &&
-					(device.VisibilityMask & VisibilityFlag.ScreenOverlay) == VisibilityFlag.None;
+			if ((device.VisibilityMask & VisibilityFlag.ScreenOverlay) != (this.VisibilityGroup & VisibilityFlag.ScreenOverlay)) return false;
+			if ((this.VisibilityGroup & device.VisibilityMask & VisibilityFlag.AllGroups) == VisibilityFlag.None) return false;
+
+			return true;
 		}
 
 		public void OnInit(Component.InitContext context)
