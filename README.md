@@ -15,7 +15,6 @@ There are no downloads for now, the only way is to build from source.
 Once the plugin has enough content, a binary will be made available.
 
 ### building instructions
-
 1. Clone this repository
 2. Run DualityEditor.exe. It downloads the required packages defined in PackageConfig.xml.
 3. Open the solution and compile it.
