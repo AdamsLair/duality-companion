@@ -1,6 +1,8 @@
 # duality-companion
 Duality Companion is a plugin for the Duality engine; it aims to contain utility classes, bits of code and extensions that, for one reason or another, cannot be included in the engine itself but are deemed to be useful, sought-after and trivial enough that they can made properly (at least, in a way that could satisfy the majority of users) once and for all, without the need to reinvent the wheel at each new project.
 
+This repository is maintained and developed independently by the [@duality-contributors](https://github.com/orgs/AdamsLair/teams/duality-contributors) team.
+
 ## how to contribute
 There are a couple of basic rules that should be followed to ensure that this plugin does what it is set out to do:
 * Ask yourself if the feature you want to add is something that is commonly requested: if yes, and it's not a complex feature, this is the right place.
