@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 
 using Duality;
+using Duality.Plugins.Companion.Coroutines;
+using Duality.Resources;
 
 namespace Duality.Plugins.Companion
 {
@@ -12,19 +14,18 @@ namespace Duality.Plugins.Companion
 	/// </summary>
 	public class CompanionPlugin : CorePlugin
 	{
-		// Override methods here for global logic
-
-		protected override void OnBeforeUpdate()
+        protected override void OnBeforeUpdate()
 		{
 			base.OnBeforeUpdate();
 
 			if (DualityApp.ExecContext == DualityApp.ExecutionContext.Game)
 			{
 				Timer.Update();
+                CoroutineManager.Update();
 			}
 		}
 
-		protected override void OnExecContextChanged(DualityApp.ExecutionContext previousContext)
+        protected override void OnExecContextChanged(DualityApp.ExecutionContext previousContext)
 		{
 			base.OnExecContextChanged(previousContext);
 
