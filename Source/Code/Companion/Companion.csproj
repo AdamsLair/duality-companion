@@ -61,6 +61,8 @@
     <Compile Include="Drawing\PlaneRenderer.cs" />
     <Compile Include="Drawing\CheckeredBackground.cs" />
     <Compile Include="Drawing\Colors.cs" />
+    <Compile Include="MapGen\MapExtensions.cs" />
+    <Compile Include="MapGen\MapGenerator.cs" />
     <Compile Include="Math\Geometry\Circle.cs" />
     <Compile Include="Math\Geometry\GeometryHelper.cs" />
     <Compile Include="Math\Geometry\Intersection.cs" />
@@ -97,7 +99,6 @@
       <HintPath>..\..\..\NVorbis.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(SolutionDir)../../Plugins"
