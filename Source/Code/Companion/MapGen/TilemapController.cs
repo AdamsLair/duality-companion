@@ -56,6 +56,11 @@ namespace Duality.Plugins.Companion.MapGen
                     tileGrid[x, y] = new Tile(tileIndex);
                 }
             }
+
+            var width = xMax - xMin + 1;
+            var height = yMax - yMin + 1;
+            Tile.UpdateAutoTileCon(tileGrid, null, xMin, yMin, width, height, _tilemap.Tileset);
+            Tile.ResolveIndices(tileGrid, xMin, yMin, xMax-xMin+1, yMax-yMin+1, _tilemap.Tileset);
             _tilemap.EndUpdateTiles();
         }
 
