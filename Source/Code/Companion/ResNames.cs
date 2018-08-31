@@ -5,5 +5,6 @@
 		public const string ComponentsEditorCategory = "Companion/Components";
 		public const string DrawingEditorCategory = "Companion/Drawing";
 		public const string DiagnosticsEditorCategory = "Companion/Diagnostics";
+		public const string MapGenCategory = "Companion/MapGen";
 	}
 }
