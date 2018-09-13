@@ -24,10 +24,10 @@ namespace Duality.Plugins.Companion.MapGen
             set => _solidTileIndex = value;
         }
 
-        public void SetupTilemap(MapGenerationData genData)
+        public void SetupTilemap(MapGenerationParams genParams)
         {
             _tilemap = GameObj.GetComponent<Tilemap>();
-            _tilemap.Resize(genData.Width, genData.Height);
+            _tilemap.Resize(genParams.Width, genParams.Height);
             var tileGrid = _tilemap.BeginUpdateTiles();
             tileGrid.Fill(new Tile(_emptyTileIndex), 0, 0, tileGrid.Width, tileGrid.Height);
             _tilemap.EndUpdateTiles();

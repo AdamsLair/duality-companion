@@ -9,22 +9,22 @@ namespace Duality.Plugins.Companion.Samples
     [EditorHintCategory(ResNames.SampleComponentCategory)]
     public class MapGenSample : Component, ICmpInitializable
     {
-        private MapGenerationData _mapGenerationData;
+        private ContentRef<MapGenerationParams> _mapGenerationParams;
         [DontSerialize] private TilemapController _tilemapController;
 
-        public MapGenerationData MapGenerationData
+        public ContentRef<MapGenerationParams> MapGenerationParams
         {
-            get => _mapGenerationData;
-            set => _mapGenerationData = value;
+            get => _mapGenerationParams;
+            set => _mapGenerationParams = value;
         }
 
         void ICmpInitializable.OnInit(InitContext context)
         {
-            if (context == InitContext.Activate && _mapGenerationData != null)
+            if (context == InitContext.Activate && _mapGenerationParams != null)
             {
                 _tilemapController = GameObj.GetComponent<TilemapController>();
-                _tilemapController.SetupTilemap(_mapGenerationData);
-                _tilemapController.UpdateTilemap(new MapGenerator().GenerateMap(_mapGenerationData));
+                _tilemapController.SetupTilemap(_mapGenerationParams.Res);
+                _tilemapController.UpdateTilemap(new MapGenerator().GenerateMap(_mapGenerationParams.Res));
                 
                 DualityApp.Keyboard.KeyDown += KeyDownCallback;
             }
@@ -39,7 +39,7 @@ namespace Duality.Plugins.Companion.Samples
         {
             if (e.Key == Key.Space)
             {
-                _tilemapController.UpdateTilemap(new MapGenerator().GenerateMap(_mapGenerationData));
+                _tilemapController.UpdateTilemap(new MapGenerator().GenerateMap(_mapGenerationParams.Res));
             }
         }
     }

@@ -10,81 +10,21 @@ namespace Duality.Plugins.Companion.MapGen
         Empty
     }
 
-    public class MapGenerationData
-    {
-        private int _width;
-        private int _height;
-        private int _minRoomSize;
-        private int _maxRoomSize;
-        private int _minCorridorLength;
-        private int _maxCorridorLength;
-        private int _featureNum;
-        private int _maxIterations;
-
-        public int Width
-        {
-            get => _width;
-            set => _width = value;
-        }
-
-        public int Height
-        {
-            get => _height;
-            set => _height = value;
-        }
-
-        public int MinRoomSize
-        {
-            get => _minRoomSize;
-            set => _minRoomSize = value;
-        }
-
-        public int MaxRoomSize
-        {
-            get => _maxRoomSize;
-            set => _maxRoomSize = value;
-        }
-
-        public int MinCorridorLength
-        {
-            get => _minCorridorLength;
-            set => _minCorridorLength = value;
-        }
-
-        public int MaxCorridorLength
-        {
-            get => _maxCorridorLength;
-            set => _maxCorridorLength = value;
-        }
-
-        public int FeatureNum
-        {
-            get => _featureNum;
-            set => _featureNum = value;
-        }
-
-        public int MaxIterations
-        {
-            get => _maxIterations;
-            set => _maxIterations = value;
-        }
-    }
-
     public class MapGenerator
     {
-        [DontSerialize] private MapGenerationData _genData;
+        [DontSerialize] private MapGenerationParams _genParams;
 
-        public Grid<TileType> GenerateMap(MapGenerationData mapGenerationData)
+        public Grid<TileType> GenerateMap(MapGenerationParams mapGenerationParams)
         {
-            _genData = mapGenerationData;
-            var map = new Grid<TileType>(_genData.Width - 2, _genData.Height - 2);
+            _genParams = mapGenerationParams;
+            var map = new Grid<TileType>(_genParams.Width - 2, _genParams.Height - 2);
             map.Fill(TileType.Solid, 0, 0, map.Width, map.Height);
 
             CreateCenterRoom(map);
 
             var numberOfFeaturesAdded = 0;
             var iterations = 0;
-            while (numberOfFeaturesAdded < _genData.FeatureNum && iterations <= _genData.MaxIterations)
+            while (numberOfFeaturesAdded < _genParams.FeatureNum && iterations <= _genParams.MaxIterations)
             {
                 if (TryAddFeature(map))
                 {
@@ -94,14 +34,14 @@ namespace Duality.Plugins.Companion.MapGen
                 iterations++;
             }
 
-            map.AssumeRect(-1, -1, _genData.Width, _genData.Height);
+            map.AssumeRect(-1, -1, _genParams.Width, _genParams.Height);
             return map;
         }
 
         private void CreateCenterRoom(Grid<TileType> map)
         {
-            var roomWidth = MathF.Rnd.Next(_genData.MinRoomSize, _genData.MaxRoomSize);
-            var roomHeight = MathF.Rnd.Next(_genData.MinRoomSize, _genData.MaxRoomSize);
+            var roomWidth = MathF.Rnd.Next(_genParams.MinRoomSize, _genParams.MaxRoomSize);
+            var roomHeight = MathF.Rnd.Next(_genParams.MinRoomSize, _genParams.MaxRoomSize);
 
             var left = MathF.Rnd.Next(1, map.Width - roomWidth - 1);
             var top = MathF.Rnd.Next(1, map.Height - roomHeight - 1);
@@ -130,9 +70,9 @@ namespace Duality.Plugins.Companion.MapGen
             var roomDir1 = GetDirection(map, wallBase);
             var roomDir2 = new Point2(roomDir1.X == 1 ? 0 : 1, roomDir1.Y == 1 ? 0 : 1);
 
-            var room2 = MathF.Rnd.Next(_genData.MinRoomSize, _genData.MaxRoomSize);
+            var room2 = MathF.Rnd.Next(_genParams.MinRoomSize, _genParams.MaxRoomSize);
             var roomOffset = MathF.Rnd.Next(room2);
-            var room1 = MathF.Rnd.Next(_genData.MinRoomSize, _genData.MaxRoomSize);
+            var room1 = MathF.Rnd.Next(_genParams.MinRoomSize, _genParams.MaxRoomSize);
             var solidToEmpty = new List<Point2>();
 
             for (var c1 = 0; c1 < room1; c1++)
@@ -164,7 +104,7 @@ namespace Duality.Plugins.Companion.MapGen
             var corridorDir = GetDirection(map, wallBase);
             var solidToEmpty = new List<Point2>();
 
-            var corridorLength = MathF.Rnd.Next(_genData.MinCorridorLength, _genData.MaxCorridorLength);
+            var corridorLength = MathF.Rnd.Next(_genParams.MinCorridorLength, _genParams.MaxCorridorLength);
             for (var corridorIndex = 0; corridorIndex < corridorLength; ++corridorIndex)
             {
                 var corridorPos = wallBase + corridorDir * corridorIndex;

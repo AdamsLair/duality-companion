@@ -62,6 +62,7 @@
     <Compile Include="Drawing\CheckeredBackground.cs" />
     <Compile Include="Drawing\Colors.cs" />
     <Compile Include="MapGen\MapExtensions.cs" />
+    <Compile Include="MapGen\MapGenerationParams.cs" />
     <Compile Include="MapGen\MapGenerator.cs" />
     <Compile Include="MapGen\TilemapController.cs" />
     <Compile Include="Math\Geometry\Circle.cs" />
